@@ -80,6 +80,28 @@ export const StudentDashboard = ({ userId }: { userId: string }) => {
   return (
     <div className="space-y-8">
       <section>
+        <Card className="bg-gradient-to-r from-primary/10 to-accent/10 border-primary/20">
+          <CardContent className="pt-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Award className="w-12 h-12 text-primary" />
+                <div>
+                  <h3 className="text-xl font-bold">My Grades</h3>
+                  <p className="text-sm text-muted-foreground">View your performance and feedback</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => navigate("/my-grades")}
+                style={{ background: "var(--gradient-primary)" }}
+              >
+                View Grades
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section>
         <div className="flex items-center gap-2 mb-6">
           <BookOpen className="w-6 h-6 text-primary" />
           <h2 className="text-2xl font-bold">My Courses</h2>
