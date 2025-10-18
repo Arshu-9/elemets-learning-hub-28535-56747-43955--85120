@@ -39,7 +39,7 @@ const Courses = () => {
       .from("user_roles")
       .select("role")
       .eq("user_id", user.id)
-      .single();
+      .single() as any;
     if (data) setUserRole(data.role);
   };
 
@@ -50,7 +50,7 @@ const Courses = () => {
         *,
         profiles!courses_teacher_id_fkey(full_name)
       `)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false }) as any;
 
     if (error) {
       toast.error("Failed to load courses");
@@ -68,7 +68,7 @@ const Courses = () => {
       description: formData.description,
       duration: formData.duration,
       teacher_id: user.id,
-    });
+    } as any) as any;
 
     if (error) {
       toast.error("Failed to create course");
@@ -86,7 +86,7 @@ const Courses = () => {
     const { error } = await supabase.from("enrollments").insert({
       course_id: courseId,
       student_id: user.id,
-    });
+    } as any) as any;
 
     if (error) {
       toast.error("Failed to enroll");

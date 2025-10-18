@@ -29,7 +29,7 @@ export const TeacherDashboard = ({ userId }: { userId: string }) => {
         .from("courses")
         .select("*")
         .eq("teacher_id", userId)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false }) as any;
 
       if (error) throw error;
       setCourses(data || []);

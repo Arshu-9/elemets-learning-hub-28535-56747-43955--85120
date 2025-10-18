@@ -42,7 +42,7 @@ export const useAuth = () => {
       .from("user_roles")
       .select("role")
       .eq("user_id", userId)
-      .single();
+      .single() as any;
 
     if (data && !error) {
       setUserRole(data.role);

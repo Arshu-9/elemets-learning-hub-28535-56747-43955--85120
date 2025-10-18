@@ -35,19 +35,19 @@ export const StudentDashboard = ({ userId }: { userId: string }) => {
       const { data: enrolled, error: enrolledError } = await supabase
         .from("enrollments")
         .select("course_id, courses(*)")
-        .eq("student_id", userId);
+        .eq("student_id", userId) as any;
 
       if (enrolledError) throw enrolledError;
 
       const { data: allCourses, error: coursesError } = await supabase
         .from("courses")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false }) as any;
 
       if (coursesError) throw coursesError;
 
-      const enrolledIds = enrolled?.map((e) => e.course_id) || [];
-      const available = allCourses?.filter((c) => !enrolledIds.includes(c.id)) || [];
+      const enrolledIds = enrolled?.map((e: any) => e.course_id) || [];
+      const available = allCourses?.filter((c: any) => !enrolledIds.includes(c.id)) || [];
 
       setEnrolledCourses(enrolled || []);
       setAvailableCourses(available);
@@ -62,7 +62,7 @@ export const StudentDashboard = ({ userId }: { userId: string }) => {
     try {
       const { error } = await supabase
         .from("enrollments")
-        .insert({ course_id: courseId, student_id: userId });
+        .insert({ course_id: courseId, student_id: userId } as any) as any;
 
       if (error) throw error;
 

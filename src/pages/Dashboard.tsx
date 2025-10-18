@@ -12,17 +12,17 @@ const Dashboard = () => {
   const [stats, setStats] = useState({ courses: 0, assignments: 0, enrollments: 0 });
 
   useEffect(() => {
-    const fetchUserRole = async () => {
-      if (!user) return;
-      
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .single();
-      
-      if (data) setUserRole(data.role);
-    };
+  const fetchUserRole = async () => {
+    if (!user) return;
+    
+    const { data } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .single() as any;
+    
+    if (data) setUserRole(data.role);
+  };
 
     const fetchStats = async () => {
       if (!user) return;
@@ -31,19 +31,19 @@ const Dashboard = () => {
         const { count: coursesCount } = await supabase
           .from("courses")
           .select("*", { count: "exact", head: true })
-          .eq("teacher_id", user.id);
+          .eq("teacher_id", user.id) as any;
         
         const { count: assignmentsCount } = await supabase
           .from("assignments")
           .select("*, courses!inner(*)", { count: "exact", head: true })
-          .eq("courses.teacher_id", user.id);
+          .eq("courses.teacher_id", user.id) as any;
 
         setStats({ courses: coursesCount || 0, assignments: assignmentsCount || 0, enrollments: 0 });
       } else {
         const { count: enrollmentsCount } = await supabase
           .from("enrollments")
           .select("*", { count: "exact", head: true })
-          .eq("student_id", user.id);
+          .eq("student_id", user.id) as any;
 
         setStats({ courses: 0, assignments: 0, enrollments: enrollmentsCount || 0 });
       }

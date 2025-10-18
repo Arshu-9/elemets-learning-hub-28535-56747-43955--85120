@@ -31,7 +31,7 @@ const CreateCourse = () => {
           description,
           duration,
           teacher_id: user.id,
-        });
+        } as any) as any;
 
       if (error) throw error;
 

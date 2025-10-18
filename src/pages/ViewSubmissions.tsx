@@ -37,7 +37,7 @@ const ViewSubmissions = () => {
       .from("assignments")
       .select("title")
       .eq("id", assignmentId)
-      .single();
+      .single() as any;
 
     if (data) setAssignmentTitle(data.title);
   };
@@ -48,7 +48,7 @@ const ViewSubmissions = () => {
         .from("submissions")
         .select("id, content, submitted_at, student_id, assignment_id")
         .eq("assignment_id", assignmentId)
-        .order("submitted_at", { ascending: false });
+        .order("submitted_at", { ascending: false }) as any;
 
       if (subsErr) throw subsErr;
 
@@ -58,18 +58,18 @@ const ViewSubmissions = () => {
         return;
       }
 
-      const studentIds = Array.from(new Set(submissionsList.map((s: any) => s.student_id)));
+      const studentIds: string[] = Array.from(new Set(submissionsList.map((s: any) => s.student_id)));
       const submissionIds = submissionsList.map((s: any) => s.id);
 
       const [profilesRes, gradesRes] = await Promise.all([
         supabase
           .from("profiles")
           .select("user_id, full_name, email")
-          .in("user_id", studentIds),
+          .in("user_id", studentIds) as any,
         supabase
           .from("grades")
           .select("submission_id, grade, feedback")
-          .in("submission_id", submissionIds),
+          .in("submission_id", submissionIds) as any,
       ]);
 
       if (profilesRes.error) throw profilesRes.error;

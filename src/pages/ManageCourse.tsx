@@ -57,7 +57,7 @@ const ManageCourse = () => {
         .from("courses")
         .select("*")
         .eq("id", courseId)
-        .single();
+        .single() as any;
 
       if (courseError) throw courseError;
       setCourse(courseData);
@@ -66,19 +66,19 @@ const ManageCourse = () => {
       const { data: enrollmentData } = await supabase
         .from("enrollments")
         .select("student_id")
-        .eq("course_id", courseId);
+        .eq("course_id", courseId) as any;
 
       // Fetch profiles for enrolled students
-      const studentIds = enrollmentData?.map(e => e.student_id) || [];
+      const studentIds = enrollmentData?.map((e: any) => e.student_id) || [];
       const { data: profileData } = await supabase
         .from("profiles")
         .select("user_id, full_name, email")
-        .in("user_id", studentIds);
+        .in("user_id", studentIds) as any;
 
       // Combine data
-      const studentsData = enrollmentData?.map(e => ({
+      const studentsData = enrollmentData?.map((e: any) => ({
         student_id: e.student_id,
-        profiles: profileData?.find(p => p.user_id === e.student_id) || { full_name: '', email: '' }
+        profiles: profileData?.find((p: any) => p.user_id === e.student_id) || { full_name: '', email: '' }
       })) || [];
 
       setStudents(studentsData);
@@ -87,7 +87,7 @@ const ManageCourse = () => {
         .from("assignments")
         .select("*")
         .eq("course_id", courseId)
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: false }) as any;
 
       if (assignmentsError) throw assignmentsError;
       setAssignments(assignmentsData || []);
@@ -109,7 +109,7 @@ const ManageCourse = () => {
           title: assignmentTitle,
           description: assignmentDescription,
           due_date: dueDate || null,
-        });
+        } as any) as any;
 
       if (error) throw error;
 

@@ -55,7 +55,7 @@ const CourseDetail = () => {
         profiles!courses_teacher_id_fkey(full_name)
       `)
       .eq("id", courseId)
-      .single();
+      .single() as any;
 
     if (error) {
       toast.error("Failed to load course");
@@ -70,7 +70,7 @@ const CourseDetail = () => {
       .from("user_roles")
       .select("role")
       .eq("user_id", user.id)
-      .single();
+      .single() as any;
     if (data) setUserRole(data.role);
   };
 
@@ -81,7 +81,7 @@ const CourseDetail = () => {
         id,
         profiles!enrollments_student_id_fkey(full_name, email)
       `)
-      .eq("course_id", courseId);
+      .eq("course_id", courseId) as any;
 
     if (!error && data) {
       setStudents(data as any);
@@ -93,7 +93,7 @@ const CourseDetail = () => {
       .from("assignments")
       .select("*")
       .eq("course_id", courseId)
-      .order("due_date", { ascending: true });
+      .order("due_date", { ascending: true }) as any;
 
     if (!error && data) {
       setAssignments(data);

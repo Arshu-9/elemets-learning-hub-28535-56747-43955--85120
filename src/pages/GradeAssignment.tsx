@@ -51,7 +51,7 @@ const GradeAssignment = () => {
         .from("assignments")
         .select("id, title, course_id")
         .eq("id", assignmentId)
-        .single();
+        .single() as any;
 
       if (assignmentError) throw assignmentError;
       setAssignment(assignmentData);
@@ -60,19 +60,19 @@ const GradeAssignment = () => {
       const { data: submissionData } = await supabase
         .from("submissions")
         .select("id, content, submitted_at, student_id, grades(grade, feedback)")
-        .eq("assignment_id", assignmentId);
+        .eq("assignment_id", assignmentId) as any;
 
       // Fetch profiles
-      const studentIds = submissionData?.map(s => s.student_id) || [];
+      const studentIds = submissionData?.map((s: any) => s.student_id) || [];
       const { data: profileData } = await supabase
         .from("profiles")
         .select("user_id, full_name, email")
-        .in("user_id", studentIds);
+        .in("user_id", studentIds) as any;
 
       // Combine data
-      const submissionsData = submissionData?.map(s => ({
+      const submissionsData = submissionData?.map((s: any) => ({
         ...s,
-        profiles: profileData?.find(p => p.user_id === s.student_id) || { full_name: '', email: '' }
+        profiles: profileData?.find((p: any) => p.user_id === s.student_id) || { full_name: '', email: '' }
       })) || [];
 
       setSubmissions(submissionsData);
@@ -98,8 +98,8 @@ const GradeAssignment = () => {
       if (selectedSubmission.grades) {
         const { error } = await supabase
           .from("grades")
-          .update({ grade: gradeValue, feedback })
-          .eq("submission_id", selectedSubmission.id);
+          .update({ grade: gradeValue, feedback } as any)
+          .eq("submission_id", selectedSubmission.id) as any;
 
         if (error) throw error;
       } else {
@@ -109,7 +109,7 @@ const GradeAssignment = () => {
             submission_id: selectedSubmission.id,
             grade: gradeValue,
             feedback,
-          });
+          } as any) as any;
 
         if (error) throw error;
       }

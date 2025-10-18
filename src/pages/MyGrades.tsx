@@ -51,7 +51,7 @@ const MyGrades = () => {
         )
       `)
       .eq("submissions.student_id", user.id)
-      .order("graded_at", { ascending: false });
+      .order("graded_at", { ascending: false }) as any;
 
     if (error) {
       toast.error("Failed to load grades");

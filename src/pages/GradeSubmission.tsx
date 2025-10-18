@@ -44,7 +44,7 @@ const GradeSubmission = () => {
         profiles!submissions_student_id_fkey(full_name)
       `)
       .eq("id", submissionId)
-      .single();
+      .single() as any;
 
     if (error) {
       toast.error("Failed to load submission");
@@ -58,7 +58,7 @@ const GradeSubmission = () => {
       .from("grades")
       .select("*")
       .eq("submission_id", submissionId)
-      .maybeSingle();
+      .maybeSingle() as any;
 
     if (data) {
       setExistingGrade(data);
@@ -82,8 +82,8 @@ const GradeSubmission = () => {
         .update({
           grade: gradeValue,
           feedback: feedback || null,
-        })
-        .eq("submission_id", submissionId);
+        } as any)
+        .eq("submission_id", submissionId) as any;
 
       if (error) {
         toast.error("Failed to update grade");
@@ -96,7 +96,7 @@ const GradeSubmission = () => {
         submission_id: submissionId,
         grade: gradeValue,
         feedback: feedback || null,
-      });
+      } as any) as any;
 
       if (error) {
         toast.error("Failed to submit grade");
