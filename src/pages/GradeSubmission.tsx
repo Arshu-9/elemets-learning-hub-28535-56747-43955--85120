@@ -37,20 +37,28 @@ const GradeSubmission = () => {
   }, [submissionId]);
 
   const fetchSubmission = async () => {
-    const { data, error } = await supabase
+    const { data: submissionData, error: submissionError } = await supabase
       .from("submissions")
-      .select(`
-        *,
-        profiles!submissions_student_id_fkey(full_name)
-      `)
+      .select("*")
       .eq("id", submissionId)
       .single() as any;
 
-    if (error) {
+    if (submissionError) {
       toast.error("Failed to load submission");
-    } else {
-      setSubmission(data as any);
+      return;
     }
+
+    // Fetch the student profile separately
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("full_name")
+      .eq("user_id", submissionData.student_id)
+      .single() as any;
+
+    setSubmission({
+      ...submissionData,
+      profiles: profileData
+    } as any);
   };
 
   const fetchGrade = async () => {
