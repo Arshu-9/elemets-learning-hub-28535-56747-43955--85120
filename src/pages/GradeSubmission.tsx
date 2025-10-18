@@ -100,8 +100,15 @@ const GradeSubmission = () => {
       toast.error("Failed to submit grade");
     } else {
       toast.success(existingGrade ? "Grade updated successfully!" : "Grade submitted successfully!");
-      navigate(-1);
+      // Use setTimeout to ensure toast is visible before navigation
+      setTimeout(() => {
+        navigate(-1);
+      }, 500);
     }
+  };
+
+  const handleBack = () => {
+    navigate(-1);
   };
 
   if (!submission) {
@@ -112,10 +119,14 @@ const GradeSubmission = () => {
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
-          <button onClick={() => navigate(-1)} className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-2">
+          <Button 
+            variant="ghost" 
+            onClick={handleBack}
+            className="inline-flex items-center text-sm mb-2 px-0 hover:bg-transparent"
+          >
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back
-          </button>
+          </Button>
           <h1 className="text-2xl font-bold mt-2">Grade Submission</h1>
         </div>
       </header>
