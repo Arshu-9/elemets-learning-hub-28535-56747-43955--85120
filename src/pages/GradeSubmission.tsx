@@ -84,34 +84,23 @@ const GradeSubmission = () => {
       return;
     }
 
-    if (existingGrade) {
-      const { error } = await supabase
-        .from("grades")
-        .update({
-          grade: gradeValue,
-          feedback: feedback || null,
-        } as any)
-        .eq("submission_id", submissionId) as any;
-
-      if (error) {
-        toast.error("Failed to update grade");
-      } else {
-        toast.success("Grade updated successfully!");
-        navigate(-1);
-      }
-    } else {
-      const { error } = await supabase.from("grades").insert({
+    // Use upsert to handle both insert and update cases
+    const { error } = await supabase
+      .from("grades")
+      .upsert({
         submission_id: submissionId,
         grade: gradeValue,
         feedback: feedback || null,
-      } as any) as any;
+      } as any, {
+        onConflict: 'submission_id'
+      }) as any;
 
-      if (error) {
-        toast.error("Failed to submit grade");
-      } else {
-        toast.success("Grade submitted successfully!");
-        navigate(-1);
-      }
+    if (error) {
+      console.error("Grade submission error:", error);
+      toast.error("Failed to submit grade");
+    } else {
+      toast.success(existingGrade ? "Grade updated successfully!" : "Grade submitted successfully!");
+      navigate(-1);
     }
   };
 
