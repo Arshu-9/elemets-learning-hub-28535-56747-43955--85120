@@ -77,7 +77,7 @@ const MyGrades = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-2">
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back to Dashboard
@@ -86,7 +86,7 @@ const MyGrades = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8">
         {loading ? (
           <div className="text-center py-12">Loading...</div>
         ) : grades.length === 0 ? (
@@ -115,7 +115,7 @@ const MyGrades = () => {
                   </div>
                   <Progress value={averageGrade} className="h-3" />
                 </div>
-                <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                   <div>
                     <div className="text-muted-foreground">Total Assignments</div>
                     <div className="text-2xl font-bold">{grades.length}</div>

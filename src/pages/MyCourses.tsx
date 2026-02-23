@@ -71,7 +71,7 @@ const MyCourses = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <Link to="/" className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground mb-2">
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back to Dashboard
@@ -80,7 +80,7 @@ const MyCourses = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8">
         {loading ? (
           <div className="text-center py-12">Loading...</div>
         ) : enrollments.length === 0 ? (
@@ -92,7 +92,7 @@ const MyCourses = () => {
             </Link>
           </div>
         ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {enrollments.map((enrollment) => (
               <Card key={enrollment.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>

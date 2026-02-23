@@ -118,7 +118,7 @@ const GradeSubmission = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <Button 
             variant="ghost" 
             onClick={handleBack}
@@ -131,7 +131,7 @@ const GradeSubmission = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-3xl space-y-6">
+      <main className="max-w-4xl mx-auto px-4 lg:px-8 py-8 space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Student Submission</CardTitle>

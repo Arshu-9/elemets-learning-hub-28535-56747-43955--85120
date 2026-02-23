@@ -135,7 +135,7 @@ const ManageCourse = () => {
   return (
     <div className="min-h-screen" style={{ background: "var(--gradient-subtle)" }}>
       <header className="border-b bg-card">
-        <div className="container mx-auto px-4 py-4">
+        <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" onClick={() => navigate("/dashboard")}>
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -149,7 +149,7 @@ const ManageCourse = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 lg:px-8 py-8">
         <Tabs defaultValue="students" className="space-y-6">
           <TabsList>
             <TabsTrigger value="students">
